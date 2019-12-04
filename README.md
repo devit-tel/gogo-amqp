@@ -24,7 +24,7 @@ simple amqp client by golang build on top [github.com/streadway/amqp](https://gi
 
 - create consumer and register queue handler
 ```go
-    consumer, err := gogo_amqp.NewConsumer("localhost:5672", "guest", "guest")
+    	consumer, err := gogo_amqp.NewConsumer("localhost:5672", "guest", "guest")
 	defer consumer.Close()
 	if err != nil {
 		panic(err)
