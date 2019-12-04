@@ -1,5 +1,5 @@
 # gogo-amqp
-simple amqp client by golang
+simple amqp client by golang build on top github.com/streadway/amqp
 
 
 ---
@@ -7,7 +7,7 @@ simple amqp client by golang
 ### Todo
 - [x] support graceful shutdown
 - [x] support direct produce message 
-- [x] support exhcnage produce message
+- [x] support exchange produce message
 
 ---
 ### Limitation
@@ -44,7 +44,7 @@ simple amqp client by golang
 ```
 
 
-- create producer and produce message to exchange and direct queue
+- create producer and produce message to exchange / direct queue
 ```go
     producer, err := gogo_amqp.NewProducer("localhost:5672", "guest", "guest")
     if err !=nil {
