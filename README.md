@@ -8,6 +8,7 @@ simple amqp client by golang build on top [github.com/streadway/amqp](https://gi
 - [x] support graceful shutdown
 - [x] support direct produce message 
 - [x] support exchange produce message
+- [ ] test failed case
 
 ---
 ### Limitation
@@ -23,6 +24,7 @@ simple amqp client by golang build on top [github.com/streadway/amqp](https://gi
 ### Usage
 
 - create consumer and register queue handler
+- if handler return err gogo-amqp will be send nck and requeue
 ```go
     	consumer, err := gogo_amqp.NewConsumer("localhost:5672", "guest", "guest")
 	defer consumer.Close()
