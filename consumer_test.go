@@ -58,7 +58,7 @@ func TestProduceAndConsumeMessage(t *testing.T) {
 	consumer, producer := setupTest(t)
 
 	var triggerCount int
-	consumer.SetupQueueHandler(testQueueName, func(data []byte) error {
+	consumer.RegisterQueueHandler(testQueueName, func(data []byte) error {
 		triggerCount++
 		return nil
 	})

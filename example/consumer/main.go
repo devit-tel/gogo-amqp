@@ -14,14 +14,14 @@ func main() {
 		panic(err)
 	}
 
-	consumer.SetupQueueHandler("test_queue", func(data []byte) error {
+	consumer.RegisterQueueHandler("test_queue", func(data []byte) error {
 		fmt.Printf("[test_queue] data: %s \n", string(data))
 		time.Sleep(time.Second * 2)
 		fmt.Println("[test_queue] end")
 		return nil
 	})
 
-	consumer.SetupQueueHandler("test_queue_x", func(data []byte) error {
+	consumer.RegisterQueueHandler("test_queue_x", func(data []byte) error {
 		fmt.Printf("[test_queue_x] data: %s \n", string(data))
 		return nil
 	})

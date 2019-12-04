@@ -57,7 +57,7 @@ func (c *Consumer) Close() {
 	}
 }
 
-func (c *Consumer) SetupQueueHandler(queueName string, handler ConsumeHandler) {
+func (c *Consumer) RegisterQueueHandler(queueName string, handler ConsumeHandler) {
 	c.queueHandlers[queueName] = handler
 }
 
