@@ -1,5 +1,5 @@
 # gogo-amqp
-simple amqp client by golang build on top github.com/streadway/amqp
+simple amqp client by golang build on top [github.com/streadway/amqp](https://github.com/streadway/amqp)
 
 
 ---
@@ -30,13 +30,13 @@ simple amqp client by golang build on top github.com/streadway/amqp
 		panic(err)
 	}
 
-	consumer.SetupQueueHandler("test_queue", func(data []byte) error {
-        // implement here
+	consumer.RegisterQueueHandler("test_queue", func(data []byte) error {
+        	// implement here
 		return nil
 	})
 
-	consumer.SetupQueueHandler("test_queue_x", func(data []byte) error {
-        // implement here
+	consumer.RegisterQueueHandler("test_queue_x", func(data []byte) error {
+        	// implement here
 		return nil
 	})
 
