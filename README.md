@@ -1,4 +1,9 @@
 # gogo-amqp
+
+<p align="left">
+  <a href="https://github.com/devit-tel/gogo-amqp"><img alt="GitHub Actions status" src="https://github.com/devit-tel/gogo-amqp/workflows/go-test/badge.svg"></a>
+</p>
+
 simple amqp client by golang build on top [github.com/streadway/amqp](https://github.com/streadway/amqp)
 
 
