@@ -25,34 +25,17 @@ func setupTest(t *testing.T) (*Consumer, Producer) {
 	require.NoError(t, err)
 
 	channel, _ := consumer.conn.Channel()
-	_, err = channel.QueueDeclare(
-		testQueueName,
-		false,
-		false,
-		false,
-		false,
-		nil,
-	)
+
+	err = createQueue(channel, testQueueName)
 	require.NoError(t, err)
 
-	err = channel.ExchangeDeclare(
-		testExchangeName,
-		"direct",
-		true,
-		false,
-		false,
-		false,
-		nil,
-	)
+	err = createQueue(channel, testQueueFailed)
 	require.NoError(t, err)
 
-	err = channel.QueueBind(
-		testQueueName,
-		"",
-		testExchangeName,
-		false,
-		nil,
-	)
+	err = createExchange(channel, testExchangeName)
+	require.NoError(t, err)
+
+	err = bindExchangeToQueue(channel, testExchangeName, testQueueName)
 	require.NoError(t, err)
 
 	return consumer, producer
