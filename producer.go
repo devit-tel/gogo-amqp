@@ -14,7 +14,7 @@ type Producer interface {
 	ProduceQueue(queueName string, data interface{}) error
 }
 
-type Publisher struct {
+type ProducerClient struct {
 	channel *amqp.Channel
 }
 
@@ -30,7 +30,7 @@ func NewProducer(endpoint, username, password string) (Producer, error) {
 		return nil, err
 	}
 
-	return &Publisher{
+	return &ProducerClient{
 		channel: channel,
 	}, nil
 }
@@ -39,7 +39,7 @@ func NewDefaultProducer() (Producer, error) {
 	return NewProducer("localhost:5672", "guest", "guest")
 }
 
-func (pb *Publisher) ProduceExchange(exchangeName string, data interface{}) error {
+func (pb *ProducerClient) ProduceExchange(exchangeName string, data interface{}) error {
 	body, err := json.Marshal(data)
 	if err != nil {
 		return err
@@ -58,7 +58,7 @@ func (pb *Publisher) ProduceExchange(exchangeName string, data interface{}) erro
 	return err
 }
 
-func (pb *Publisher) ProduceQueue(queueName string, data interface{}) error {
+func (pb *ProducerClient) ProduceQueue(queueName string, data interface{}) error {
 	body, err := json.Marshal(data)
 	if err != nil {
 		return err

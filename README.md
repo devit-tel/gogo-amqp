@@ -8,7 +8,7 @@ simple amqp client by golang build on top [github.com/streadway/amqp](https://gi
 - [x] support graceful shutdown
 - [x] support direct produce message 
 - [x] support exchange produce message
-- [ ] test failed case
+- [x] test failed case
 
 ---
 ### Limitation
