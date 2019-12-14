@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	gr "github.com/devit-tel/gogo-rabbitmq"
-	"github.com/devit-tel/gogo-rabbitmq/example/setup"
+	gr "github.com/devit-tel/gogo-amqp"
+	"github.com/devit-tel/gogo-amqp/example/setup"
 )
 
 type Payload struct {

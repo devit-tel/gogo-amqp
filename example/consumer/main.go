@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	gr "github.com/devit-tel/gogo-rabbitmq"
+	gr "github.com/devit-tel/gogo-amqp"
 )
 
 func main() {

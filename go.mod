@@ -1,4 +1,4 @@
-module github.com/devit-tel/gogo-rabbitmq
+module github.com/devit-tel/gogo-amqp
 
 go 1.13
 
