@@ -44,7 +44,7 @@ func NewProducer(endpoint, vhost, username, password string, port int) (Producer
 }
 
 func NewDefaultProducer() (Producer, error) {
-	return NewProducer("localhost:5672", "/", "guest", "guest", 5672)
+	return NewProducer("localhost", "/", "guest", "guest", 5672)
 }
 
 func (pb *ProducerClient) ProduceExchange(exchangeName string, data interface{}) error {
