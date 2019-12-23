@@ -16,14 +16,17 @@ type Payload struct {
 }
 
 func init() {
-	err := setup.SimpleQueueAndExchange("test_exchange", "test_queue")
+	err := setup.SimpleQueueAndExchange("test", "test_queue")
 	if err != nil {
 		panic(err)
 	}
 }
 
 func main() {
-	producer, err := gr.NewProducer("localhost:5672", "guest", "guest")
+	producer, err := gr.NewProducer("localhost", "/", "test_user", "password", 5672)
+	if err != nil {
+		panic(err)
+	}
 
 	wg := &sync.WaitGroup{}
 	wg.Add(1)
@@ -33,7 +36,7 @@ func main() {
 		defer wg.Done()
 
 		for {
-			err = producer.ProduceExchange("test_exchange", &Payload{Message: "hello world", Lap: lap})
+			err = producer.ProduceExchange("development.test.queue", &Payload{Message: "hello world", Lap: lap})
 			if err != nil {
 				panic(fmt.Sprintf("%v", err))
 			}

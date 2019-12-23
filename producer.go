@@ -2,7 +2,6 @@ package gogo_amqp
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/streadway/amqp"
 )
@@ -18,8 +17,17 @@ type ProducerClient struct {
 	channel *amqp.Channel
 }
 
-func NewProducer(endpoint, username, password string) (Producer, error) {
-	conn, err := amqp.Dial(fmt.Sprintf("amqp://%s:%s@%s/", username, password, endpoint))
+func NewProducer(endpoint, vhost, username, password string, port int) (Producer, error) {
+	uriPath := &amqp.URI{
+		Scheme:   "amqp",
+		Host:     endpoint,
+		Port:     port,
+		Username: username,
+		Password: password,
+		Vhost:    vhost,
+	}
+
+	conn, err := amqp.Dial(uriPath.String())
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +44,7 @@ func NewProducer(endpoint, username, password string) (Producer, error) {
 }
 
 func NewDefaultProducer() (Producer, error) {
-	return NewProducer("localhost:5672", "guest", "guest")
+	return NewProducer("localhost:5672", "/", "guest", "guest", 5672)
 }
 
 func (pb *ProducerClient) ProduceExchange(exchangeName string, data interface{}) error {

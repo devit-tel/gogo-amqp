@@ -1,7 +1,6 @@
 package gogo_amqp
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -25,8 +24,17 @@ type Consumer struct {
 	channelAllRoutines chan bool
 }
 
-func NewConsumer(endpoint, username, password string) (*Consumer, error) {
-	conn, err := amqp.Dial(fmt.Sprintf("amqp://%s:%s@%s/", username, password, endpoint))
+func NewConsumer(endpoint, vhost, username, password string, port int) (*Consumer, error) {
+	uriPath := &amqp.URI{
+		Scheme:   "amqp",
+		Host:     endpoint,
+		Port:     port,
+		Username: username,
+		Password: password,
+		Vhost:    vhost,
+	}
+
+	conn, err := amqp.Dial(uriPath.String())
 	if err != nil {
 
 		return nil, err
@@ -42,7 +50,7 @@ func NewConsumer(endpoint, username, password string) (*Consumer, error) {
 }
 
 func NewDefaultConsumer() (*Consumer, error) {
-	return NewConsumer("localhost:5672", "guest", "guest")
+	return NewConsumer("localhost", "/", "guest", "guest", 5672)
 }
 
 func (c *Consumer) Close() {
