@@ -32,7 +32,7 @@ func (c *Consumer) startConsume(queueName string, channel *amqp.Channel, handler
 		case message := <-messages:
 			err = handler(message.Body)
 			if err != nil {
-				message.Nack(false, true)
+				message.Reject(false)
 				continue
 			}
 
