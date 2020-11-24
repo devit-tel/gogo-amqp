@@ -2,11 +2,9 @@ package gogo_amqp
 
 import (
 	"log"
-
-	"github.com/streadway/amqp"
 )
 
-func (c *Consumer) startConsume(queueName string, channel *amqp.Channel, handler ConsumeHandler) error {
+func (c *Consumer) startConsume(queueName string, channel *Channel, handler ConsumeHandler) error {
 	defer c.waitGroup.Done()
 
 	messages, err := channel.Consume(
