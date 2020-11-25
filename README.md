@@ -16,7 +16,7 @@ simple amqp client by golang build on top [github.com/streadway/amqp](https://gi
 - [x] test failed case
 - [x] support cluster nodes
 - [x] autoreconnect connection and channel
-
+- [ ] refactor consumer use client same producer
 ---
 
 ### Limitation
