@@ -31,14 +31,14 @@ func NewAMQPClient(urls []string, username, password string) (*AMQPClient, error
 
 	conn, err := amqpClient.NewConnection()
 	if err != nil {
-		panic(fmt.Sprint("[NewAMQPClient.NewConnection]: unable create connection %+v", err))
+		panic(fmt.Sprintf("[NewAMQPClient.NewConnection]: unable create connection %+v", err))
 	}
 
 	amqpClient.connection = conn
 
 	ch, err := amqpClient.NewChannel()
 	if err != nil {
-		panic(fmt.Sprint("[NewAMQPClient.NewChannel]: unable create channel %+v", err))
+		panic(fmt.Sprintf("[NewAMQPClient.NewChannel]: unable create channel %+v", err))
 	}
 
 	amqpClient.channel = ch
