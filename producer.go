@@ -2,6 +2,7 @@ package gogo_amqp
 
 import (
 	"encoding/json"
+	"strings"
 
 	"github.com/streadway/amqp"
 )
@@ -14,13 +15,24 @@ type Producer interface {
 }
 
 type ProducerClient struct {
-	channel *amqp.Channel
+	channel *Channel
 }
 
-func NewProducer(endpoint, vhost, username, password string, port int) (Producer, error) {
+func NewProducerByURI(uri string, username, password string) (Producer, error) {
+	amqpClient, err := NewAMQPClient(strings.Split(uri, ","), username, password)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ProducerClient{
+		channel: amqpClient.channel,
+	}, nil
+}
+
+func NewProducer(uri, vhost, username, password string, port int) (Producer, error) {
 	uriPath := &amqp.URI{
 		Scheme:   "amqp",
-		Host:     endpoint,
+		Host:     uri,
 		Port:     port,
 		Username: username,
 		Password: password,
@@ -39,7 +51,7 @@ func NewProducer(endpoint, vhost, username, password string, port int) (Producer
 	}
 
 	return &ProducerClient{
-		channel: channel,
+		channel: &Channel{Channel: channel},
 	}, nil
 }
 
