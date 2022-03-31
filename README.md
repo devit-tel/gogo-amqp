@@ -39,7 +39,7 @@ simple amqp client by golang build on top [github.com/streadway/amqp](https://gi
 - if handler return err gogo-amqp will be send nck and requeue
 
 ```go
-    	consumer, err := gogo_amqp.NewConsumer("localhost", "/", "guest", "guest", 5672)
+    	consumer, err := gogo_amqp.NewConsumer("localhost", "/", "guest", "guest", 5672, "amqp")
 	defer consumer.Close()
 	if err != nil {
 		panic(err)
@@ -61,7 +61,7 @@ simple amqp client by golang build on top [github.com/streadway/amqp](https://gi
 - create producer and produce message to exchange / direct queue
 
 ```go
-    producer, err := gogo_amqp.NewProducer("localhost", "/", "guest", "guest", 5672)
+    producer, err := gogo_amqp.NewProducer("localhost", "/", "guest", "guest", 5672, "amqp")
     if err !=nil {
         panic(err)
     }

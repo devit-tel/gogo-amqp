@@ -29,9 +29,9 @@ func NewProducerByURI(uri string, username, password string) (Producer, error) {
 	}, nil
 }
 
-func NewProducer(uri, vhost, username, password string, port int) (Producer, error) {
+func NewProducer(uri, vhost, username, password string, port int, scheme string) (Producer, error) {
 	uriPath := &amqp.URI{
-		Scheme:   "amqp",
+		Scheme:   scheme,
 		Host:     uri,
 		Port:     port,
 		Username: username,
@@ -56,7 +56,7 @@ func NewProducer(uri, vhost, username, password string, port int) (Producer, err
 }
 
 func NewDefaultProducer() (Producer, error) {
-	return NewProducer("localhost", "/", "guest", "guest", 5672)
+	return NewProducer("localhost", "/", "guest", "guest", 5672, "amqp")
 }
 
 func (pb *ProducerClient) ProduceExchange(exchangeName string, data interface{}) error {
