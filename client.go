@@ -88,7 +88,7 @@ func (amqpClient *AMQPClient) NewConnection() (*amqp.Connection, error) {
 				amqpEndpoint, _ := amqp.ParseURI(amqpClient.urls[newSeq])
 				log.Println(fmt.Sprintf("[NewAMQPClient.NewConnection]: reconnect at node path %+v", amqpEndpoint))
 
-				conn, err := dial(amqpEndpoint.Host, amqpEndpoint.Vhost, amqpClient.username, amqpClient.password, amqpEndpoint.Port)
+				conn, err := dial(amqpEndpoint.Host, amqpEndpoint.Vhost, amqpClient.username, amqpClient.password, amqpEndpoint.Port, amqpEndpoint.Scheme)
 				if err == nil {
 					amqpClient.connection = conn
 					log.Println("[NewAMQPClient.NewConnection]: reconnect success")

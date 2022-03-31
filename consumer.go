@@ -47,9 +47,9 @@ func NewConsumerByURI(uri, username, password string) (*Consumer, error) {
 	return dialCluster(strings.Split(uri, ","), username, password)
 }
 
-func NewConsumer(endpoint, vhost, username, password string, port int) (*Consumer, error) {
+func NewConsumer(endpoint, vhost, username, password string, port int, scheme string) (*Consumer, error) {
 	uriPath := &amqp.URI{
-		Scheme:   "amqp",
+		Scheme:   scheme,
 		Host:     endpoint,
 		Port:     port,
 		Username: username,
@@ -76,7 +76,7 @@ func NewConsumer(endpoint, vhost, username, password string, port int) (*Consume
 }
 
 func NewDefaultConsumer() (*Consumer, error) {
-	return NewConsumer("localhost", "/", "guest", "guest", 5672)
+	return NewConsumer("localhost", "/", "guest", "guest", 5672, "amqp")
 }
 
 func (c *Consumer) Close() {
@@ -116,9 +116,10 @@ func (c *Consumer) Start() {
 	c.waitGroup.Wait()
 }
 
-func dial(endpoint, vhost, username, password string, port int) (*amqp.Connection, error) {
+func dial(endpoint, vhost, username, password string, port int, scheme string) (*amqp.Connection, error) {
+
 	uriPath := &amqp.URI{
-		Scheme:   "amqp",
+		Scheme:   scheme,
 		Host:     endpoint,
 		Port:     port,
 		Username: username,
@@ -137,7 +138,7 @@ func dialCluster(urls []string, username, password string) (*Consumer, error) {
 		return nil, err
 	}
 
-	conn, err := dial(amqpEndpoint.Host, amqpEndpoint.Vhost, username, password, amqpEndpoint.Port)
+	conn, err := dial(amqpEndpoint.Host, amqpEndpoint.Vhost, username, password, amqpEndpoint.Port, amqpEndpoint.Scheme)
 
 	if err != nil {
 		return nil, err
@@ -172,7 +173,7 @@ func dialCluster(urls []string, username, password string) (*Consumer, error) {
 				amqpEndpoint, _ := amqp.ParseURI(urls[nodeSequence])
 				log.Println(fmt.Sprintf("reconnect at node path %+v", amqpEndpoint))
 
-				conn, err := dial(amqpEndpoint.Host, amqpEndpoint.Vhost, consumer.username, consumer.password, amqpEndpoint.Port)
+				conn, err := dial(amqpEndpoint.Host, amqpEndpoint.Vhost, consumer.username, consumer.password, amqpEndpoint.Port, amqpEndpoint.Scheme)
 				if err == nil {
 					consumer.conn = conn
 					log.Println("reconnect success")
